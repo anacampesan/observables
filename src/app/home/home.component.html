@@ -1,0 +1,7 @@
+<input type="text" name="" (keyup)="pokemon$.next($event.target.value)" />
+<!-- <button type="button" (click)="searchByName(name.value)">Search</button> -->
+<br>
+
+<div *ngIf="pokemonStats">
+  {{pokemonStats.name | async}}
+</div>
