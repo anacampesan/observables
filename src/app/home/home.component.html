@@ -3,5 +3,9 @@
 <br>
 
 <div *ngIf="pokemonStats">
-  {{pokemonStats[0] }}
+  <ul>
+    <li *ngFor="let poke of pokemonStats">
+      <strong>{{ poke.name }}</strong> ({{ poke.location_area_encounters }})
+    </li>
+  </ul>
 </div>
