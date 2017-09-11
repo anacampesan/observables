@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/mergeMap';
 
 @Injectable()
 export class PokemonService {
@@ -13,26 +14,10 @@ export class PokemonService {
 
   constructor(private _http: HttpClient) { }
 
-  // getByName(name: string) {
-  //   let query = '/pokemon/' + name;
-  //   return this._http
-  //              .get(this.baseUrl + this.getByNameUrl)
-  //              .map(response => {
-  //                setTimeout(() => {
-  //                    console.log('ueaheu')
-  //                }, 1000);
-  //              });
-  // }
-
-  getByName(name: Observable<any>) {
+  getByName(name) {
     return name.debounceTime(400)
                .distinctUntilChanged()
-               .map(item => this.getMoreByName(item));
+               .flatMap(item => this._http.get(this.baseUrl + this.getByNameUrl + item));
   }
 
-  getMoreByName(name) {
-    return this._http
-               .get(this.baseUrl + this.getByNameUrl + name)
-               .subscribe(res => console.log(res));
-  }
 }
